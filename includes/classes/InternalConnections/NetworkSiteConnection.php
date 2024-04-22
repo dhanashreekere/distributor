@@ -745,7 +745,15 @@ class NetworkSiteConnection extends Connection {
 
 		foreach ( $connection_map['internal'] as $blog_id => $syndicated_post ) {
 			// Make sure this site is still available
-			$site = get_site( (int) $blog_id );
+			//$site = get_site( (int) $blog_id );
+			if(function_exists('get_site'))        
+			 {
+				$sites= get_site( (int) $blog_id );
+			} 
+             elseif(function_exists('wp_get_site')) 
+			{
+				$sites= wp_get_site((int) $blog_id);
+			}
 			if ( null === $site ) {
 
 				// If the site isn't available anymore, remove this item from the connection map
